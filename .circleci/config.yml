@@ -1,15 +1,14 @@
 version: 2.1
 
-working_directory: ~/cpp-dummy
-
 jobs:
   unit_test:
     docker:
       - image: alpine:latest
     steps:
-      - run: apk add cmake make clang build-base llvm-static llvm-dev clang-static clang-dev
+      - run: apk add git cmake make clang build-base llvm-static llvm-dev clang-static clang-dev
       - checkout
       - run: mkdir build && cd build
+      - run: echo "working dir $PWD"
       - run: cmake ..
       - run: make cpp_dummy_test
       - run: ./cpp_dummy_test

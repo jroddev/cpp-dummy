@@ -1,4 +1,5 @@
 #include <vector>
+#include <functional>
 
 template<typename T>
 std::vector<T> dummyVector(int length, std::function<T()> generator) {
