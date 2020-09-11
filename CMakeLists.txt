@@ -34,6 +34,3 @@ target_include_directories(cpp_dummy_test
         PRIVATE
         ${googletest_SOURCE_DIR}/googletest/include)
 target_link_libraries(cpp_dummy_test cpp_dummy gtest)
-
-enable_testing()
-add_test( cpp_dummy_test cpp_dummy_test )
