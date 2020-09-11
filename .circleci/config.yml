@@ -4,7 +4,7 @@ jobs:
   unit_test:
     docker:
       - image: alpine:latest
-    working_directory: /app
+    working_directory: /repo
     steps:
       - run: apk add git cmake make clang build-base llvm-static llvm-dev clang-static clang-dev
       - checkout
@@ -12,7 +12,7 @@ jobs:
       - run: echo "working dir $PWD"
       - run:
           command: cmake ..
-          working_directory: /app/cpp-dummy/build
+          working_directory: /repo/build
       - run: make cpp_dummy_test
       - run: ./cpp_dummy_test
 
