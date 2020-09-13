@@ -1,8 +1,5 @@
 version: 2.1
 
-orbs:
-  sonarcloud: sonarsource/sonarcloud@1.0.1
-
 jobs:
   unit_test:
     docker:
@@ -26,7 +23,9 @@ jobs:
       - run:
           name: Build with wrapper
           command: ./build-wrapper-linux-x86/build-wrapper-linux-x86-64 --out-dir build_wrapper_output_directory make all
-      - sonarcloud/scan
+      - run:
+          name: Sonar Scan
+          command: ./bin/sonar/install-and-run-sonar-scanner.sh
 
 workflows:
   testing:
