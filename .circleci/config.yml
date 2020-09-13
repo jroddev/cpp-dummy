@@ -17,15 +17,17 @@ jobs:
     docker:
       - image: alpine:latest
     steps:
-      - run: apk add git cmake make clang build-base llvm-static llvm-dev clang-static clang-dev
+      - run: apk add git cmake make clang build-base llvm-static llvm-dev clang-static clang-dev curl
       - checkout
       - run: cmake .
-      - run: make cpp_dummy_test
+      - run: build-wrapper-linux-x86-64 --out-dir build_wrapper_output_directory make cpp_dummy_test
       - sonarcloud/scan
 
 workflows:
-  main:
+  testing:
     jobs:
       - unit_test
+  analysis:
+    jobs:
       - sonar_scan:
           context: SonarCloud
