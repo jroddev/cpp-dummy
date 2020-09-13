@@ -15,9 +15,10 @@ jobs:
       - run: ./cpp_dummy_test
   sonar_scan:
     docker:
-      - image: alpine:latest
+      - image: debian:buster
     steps:
-      - run: apk add git cmake make clang build-base llvm-static llvm-dev clang-static clang-dev curl
+      - run: apt-get update
+      - run: apt-get install -y build-essential git cmake autoconf libtool pkg-config curl
       - checkout
       - run:
           name: Install Sonar Build Wrapper
