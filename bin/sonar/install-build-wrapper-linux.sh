@@ -3,4 +3,4 @@
 set -e
 curl -Ol https://sonarcloud.io/static/cpp/build-wrapper-linux-x86.zip
 unzip -qq -o build-wrapper-linux-x86.zip
-chmod + xbuild-wrapper-linux-x86/build-wrapper-linux-x86-64
+chmod +x build-wrapper-linux-x86/build-wrapper-linux-x86-64
