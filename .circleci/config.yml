@@ -24,7 +24,7 @@ jobs:
       - sonarcloud/scan
 
 workflows:
-  ci:
+  main:
     jobs:
       - unit_test
       - sonar_scan:
