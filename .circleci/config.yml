@@ -27,5 +27,5 @@ workflows:
   ci:
     jobs:
       - unit_test
-      - sonar_scan
+      - sonar_scan:
           context: SonarCloud
