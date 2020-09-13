@@ -19,9 +19,13 @@ jobs:
     steps:
       - run: apk add git cmake make clang build-base llvm-static llvm-dev clang-static clang-dev curl
       - checkout
-      - run: ./bin/sonar/install-build-wrapper-linux.sh
+      - run:
+          name: Install Sonar Build Wrapper
+          command: ./bin/sonar/install-build-wrapper-linux.sh
       - run: cmake .
-      - run: build-wrapper-linux-x86-64 --out-dir build_wrapper_output_directory make cpp_dummy_test
+      - run:
+          name: Build with wrapper
+          command: ./build-wrapper-linux-x86/build-wrapper-linux-x86-64 --out-dir build_wrapper_output_directory make cpp_dummy_test
       - sonarcloud/scan
 
 workflows:
