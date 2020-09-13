@@ -7,6 +7,7 @@ SONAR_TOKEN=$SONAR_TOKEN
 SCANNER_DIRECTORY=/tmp/cache/scanner
 export SONAR_USER_HOME=$SCANNER_DIRECTORY/.sonar
 OS="linux"
+mkdir -p $SCANNER_DIRECTORY
 echo $SONAR_USER_HOME
 
 if [[ ! -x "$SCANNER_DIRECTORY/sonar-scanner-$VERSION-$OS/bin/sonar-scanner" ]]; then
