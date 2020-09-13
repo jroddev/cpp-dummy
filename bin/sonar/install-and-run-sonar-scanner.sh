@@ -1,6 +1,7 @@
 #!/bin/sh
 
-set -e
+set -ex
+
 VERSION=4.1.0.1829
 SONAR_TOKEN=$SONAR_TOKEN
 SCANNER_DIRECTORY=/tmp/cache/scanner
