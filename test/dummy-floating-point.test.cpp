@@ -9,8 +9,8 @@ TEST(DummyFloat, CreatesDifferentFloats) {
 }
 
 TEST(DummyFloat, CreatesFloatsWithinRange) {
-    auto min = 123.f;
-    auto max = 299.f;
+    auto min = 123.F;
+    auto max = 299.F;
     for(auto i = 0; i < 100; i++) {
         auto result = dummy<float>(min, max);
         EXPECT_GE(result, min);
