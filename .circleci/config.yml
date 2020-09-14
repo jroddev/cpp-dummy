@@ -3,30 +3,24 @@ version: 2.1
 jobs:
   unit_test:
     docker:
-      - image: alpine:latest
+      - image: jroddev/docker-debian-cmake-sonar:latest
     steps:
-      - run: apk add git cmake make gcc build-base curl
       - checkout
       - run: cmake .
       - run: make cpp_dummy_test
       - run: ./cpp_dummy_test
   sonar_scan:
     docker:
-      - image: alpine:latest
+      - image: jroddev/docker-debian-cmake-sonar:latest
     steps:
-      - run: apk add git cmake make gcc build-base curl
       - checkout
-      - run:
-          name: Install Sonar Build Wrapper
-          command: ./bin/sonar/install-build-wrapper-linux.sh
       - run: cmake .
       - run:
           name: Build with wrapper
-          command: ./build-wrapper-linux-x86/build-wrapper-linux-x86-64 --out-dir build_wrapper_output_directory make all
+          command: sonar-build-wrapper --out-dir build_wrapper_output_directory make all
       - run:
           name: Sonar Scan
-          command: ./bin/sonar/install-and-run-sonar-scanner.sh
-
+          command: SONAR_TOKEN=$SONAR_TOKEN /opt/sonar-scanner/bin/sonar-scanner
 workflows:
   testing:
     jobs:
