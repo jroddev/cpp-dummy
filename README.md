@@ -36,6 +36,7 @@ dummyVector<int>(10, dummy<int>);
 
 // lambda passed in to generate the ints
 dummyVector<int>(10, [](){
+    // random int between 50 and 200
     return dummy<int>(50, 200);
 });
 
