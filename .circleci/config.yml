@@ -1,31 +1,61 @@
 version: 2.1
 
+defaults: &defaults
+  working_directory: ~/project
+  docker:
+    - image: jroddev/docker-debian-cmake-sonar:latest
+
+
 jobs:
-  unit_test:
-    docker:
-      - image: jroddev/docker-debian-cmake-sonar:latest
+  checkout_code:
+    <<: *defaults
     steps:
       - checkout
-      - run: cmake .
-      - run: make cpp_dummy_test
-      - run: ./cpp_dummy_test
-  sonar_scan:
-    docker:
-      - image: jroddev/docker-debian-cmake-sonar:latest
+      - persist_to_workspace:
+          root: ~/project
+          paths:
+            - .
+  build:
+    <<: *defaults
     steps:
-      - checkout
+      - attach_workspace:
+          at: ~/project
       - run: cmake .
       - run:
-          name: Build with wrapper
+          name: Build with Sonar Wrapper
           command: sonar-build-wrapper --out-dir build_wrapper_output_directory make all
+      - persist_to_workspace:
+          root: ~/project
+          paths:
+            - .
+  unit_test:
+    <<: *defaults
+    steps:
+      - attach_workspace:
+          at: ~/project
+      - run: ./cpp_dummy_test
+  sonar_scan:
+    <<: *defaults
+    docker:
+      - image: jroddev/docker-debian-cmake-sonar:latest
+    steps:
+      - attach_workspace:
+          at: ~/project
       - run:
           name: Sonar Scan
           command: SONAR_TOKEN=$SONAR_TOKEN /opt/sonar-scanner/bin/sonar-scanner
+
 workflows:
-  testing:
+  ci:
     jobs:
-      - unit_test
-  analysis:
-    jobs:
+      - checkout_code
+      - build:
+          requires:
+            - checkout_code
+      - unit_test:
+          requires:
+            - build
       - sonar_scan:
           context: SonarCloud
+          requires:
+            - build
