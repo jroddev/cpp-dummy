@@ -43,3 +43,37 @@ dummyVector<int>(10, [](){
 // vector of user defined types
 dummyVector<MyType>(15, dummy<MyType>);
 ```
+
+-----
+Using CPP Dummy in projects
+
+## Example CMake
+```cmake
+cmake_minimum_required(VERSION 3.17)
+include(FetchContent)
+project(my_project)
+set(CMAKE_CXX_STANDARD 17)
+
+FetchContent_Declare(
+        cpp_dummy
+        GIT_REPOSITORY https://github.com/jroddev/cpp-dummy
+)
+FetchContent_MakeAvailable(cpp_dummy)
+
+add_executable(my_project main.cpp)
+target_include_directories(my_project
+        PRIVATE
+        ${cpp_dummy_SOURCE_DIR}/include)
+target_link_libraries(my_project cpp_dummy)
+```
+
+```c++
+#include <iostream>
+#include <string>
+#include <dummy/dummy.h>
+
+int main() {
+    std::cout << dummy<std::string>(10) << std::endl;
+    return 0;
+}
+```
