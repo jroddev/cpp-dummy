@@ -24,6 +24,10 @@ jobs:
       - run:
           name: Build with Sonar Wrapper
           command: sonar-build-wrapper --out-dir build_wrapper_output_directory make all
+      - persist_to_workspace:
+          root: ~/project
+          paths:
+            - .
   unit_test:
     <<: *defaults
     steps:
