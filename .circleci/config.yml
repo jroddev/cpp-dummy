@@ -47,7 +47,7 @@ workflows:
       - checkout_code
       - build:
           requires:
-            - checkout-code
+            - checkout_code
       - unit_test:
           requires:
             - build
